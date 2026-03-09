@@ -36,9 +36,20 @@ async function requireAuth() {
 
 // --- Actions ---
 
-export async function addToWatchlist(input: z.input<typeof addToWatchlistSchema>) {
+export async function addToWatchlist(
+  input: z.input<typeof addToWatchlistSchema>,
+) {
   const userId = await requireAuth();
   const data = addToWatchlistSchema.parse(input);
+
+  // Check for existing entry to prevent duplicates
+  const existing = await db.query.watchlistEntries.findFirst({
+    where: and(
+      eq(watchlistEntries.userId, userId),
+      eq(watchlistEntries.mediaId, data.mediaId),
+    ),
+  });
+  if (existing) return;
 
   await db.insert(watchlistEntries).values({
     userId,

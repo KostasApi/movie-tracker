@@ -1,12 +1,18 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useOptimistic, useTransition } from 'react';
 import { XIcon, StarIcon } from 'lucide-react';
 import { removeFromWatchlist } from '../actions/watchlist.actions';
-import { RatingForm } from './RatingForm';
 import { WATCHLIST_STATUS_LABELS } from '../constants/watchlist.constants';
+
+// Lazy-load RatingForm — heavy component (React Hook Form + Zod + Dialog)
+// Only loaded when user interacts with the Edit button
+const RatingForm = dynamic(() =>
+  import('./RatingForm').then((mod) => ({ default: mod.RatingForm })),
+);
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { WatchlistEntry } from '@/db/schema';
