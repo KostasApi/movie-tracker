@@ -79,6 +79,7 @@ export default async function HomePage({
               <Link
                 key={tab.value}
                 href={`/?type=${tab.value}`}
+                aria-current={type === tab.value ? 'page' : undefined}
                 className={cn(
                   'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
                   type === tab.value

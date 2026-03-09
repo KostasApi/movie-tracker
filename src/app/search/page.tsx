@@ -5,13 +5,15 @@ import { searchMulti } from '@/features/movies/services/movie.service';
 import { MovieGrid } from '@/features/movies/components/MovieGrid';
 import { MovieGridSkeleton } from '@/features/movies/components/MovieGridSkeleton';
 import { Button } from '@/components/ui/button';
+import type { MovieSummary, TvSummary } from '@/features/movies/types/movie.types';
 
 async function SearchResults({ query, page }: { query: string; page: number }) {
   const data = await searchMulti(query, page);
 
   // Filter out person results — only show movies and TV
   const mediaResults = data.results.filter(
-    (item) => item.media_type === 'movie' || item.media_type === 'tv',
+    (item): item is MovieSummary | TvSummary =>
+      item.media_type === 'movie' || item.media_type === 'tv',
   );
 
   return (
