@@ -1,11 +1,23 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { SearchIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useSearch } from '../hooks/useSearch';
 
 export function SearchBar() {
   const { query, setQuery } = useSearch();
+  const [inputValue, setInputValue] = useState(query);
+
+  // Sync input when URL query changes (e.g. navigating home clears ?q)
+  useEffect(() => {
+    setInputValue(query);
+  }, [query]);
+
+  const handleChange = (value: string) => {
+    setInputValue(value);
+    setQuery(value);
+  };
 
   return (
     <div className="relative">
@@ -13,8 +25,8 @@ export function SearchBar() {
       <Input
         type="search"
         placeholder="Search movies & TV shows..."
-        defaultValue={query}
-        onChange={(e) => setQuery(e.target.value)}
+        value={inputValue}
+        onChange={(e) => handleChange(e.target.value)}
         className="pl-9"
       />
     </div>
