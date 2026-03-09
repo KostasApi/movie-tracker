@@ -57,6 +57,13 @@ export async function getMovieCredits(id: string) {
   return tmdbFetch(`/movie/${id}/credits`, CreditsSchema);
 }
 
+export async function getTvCredits(id: string) {
+  'use cache';
+  cacheLife('days');
+  cacheTag(`tv-${id}`);
+  return tmdbFetch(`/tv/${id}/credits`, CreditsSchema);
+}
+
 export async function getSimilar(id: string, type: 'movie' | 'tv') {
   'use cache';
   cacheLife('days');
