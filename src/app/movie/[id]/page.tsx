@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { auth } from '@/lib/auth';
 import {
   getTrending,
@@ -32,9 +33,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+async function MovieWatchlistButton({ movieId, title, posterPath }: {
+  movieId: number;
+  title: string;
+  posterPath: string | null;
+}) {
+  const session = await auth();
+  const entry = session?.user?.id
+    ? await getWatchlistEntry(session.user.id, movieId)
+    : null;
+
+  return (
+    <WatchlistButton
+      mediaId={movieId}
+      mediaType="movie"
+      title={title}
+      posterPath={posterPath}
+      initialEntry={entry ?? null}
+    />
+  );
+}
+
 export default async function MoviePage({ params }: Props) {
   const { id } = await params;
-  const session = await auth();
 
   const [movie, credits, similar] = await Promise.all([
     getMovieDetail(id),
@@ -42,22 +63,18 @@ export default async function MoviePage({ params }: Props) {
     getSimilar(id, 'movie'),
   ]);
 
-  const entry = session?.user?.id
-    ? await getWatchlistEntry(session.user.id, movie.id)
-    : null;
-
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
       <div className="flex flex-col gap-8">
         <MovieDetail movie={movie} credits={credits} />
 
-        <WatchlistButton
-          mediaId={movie.id}
-          mediaType="movie"
-          title={movie.title}
-          posterPath={movie.poster_path}
-          initialEntry={entry ?? null}
-        />
+        <Suspense>
+          <MovieWatchlistButton
+            movieId={movie.id}
+            title={movie.title}
+            posterPath={movie.poster_path}
+          />
+        </Suspense>
 
         {similar.results.length > 0 && (
           <MovieGrid title="Similar Movies" items={similar.results} />
