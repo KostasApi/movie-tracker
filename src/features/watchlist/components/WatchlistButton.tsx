@@ -1,11 +1,19 @@
 'use client';
 
 import { useOptimistic, useTransition } from 'react';
+import { PlusIcon, XIcon, CheckIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   addToWatchlist,
   removeFromWatchlist,
 } from '../actions/watchlist.actions';
 import type { WatchlistEntry } from '@/db/schema';
+
+const STATUS_LABELS: Record<string, string> = {
+  want_to_watch: 'Want to Watch',
+  watching: 'Watching',
+  watched: 'Watched',
+};
 
 interface Props {
   mediaId: number;
@@ -57,18 +65,23 @@ export function WatchlistButton({
 
   if (!optimisticEntry) {
     return (
-      <button onClick={handleAdd} disabled={isPending}>
-        Add to Watchlist
-      </button>
+      <Button onClick={handleAdd} disabled={isPending} size="lg" className="w-full sm:w-auto">
+        <PlusIcon className="size-4" />
+        {isPending ? 'Adding...' : 'Add to Watchlist'}
+      </Button>
     );
   }
 
   return (
-    <div>
-      <span>{optimisticEntry.status}</span>
-      <button onClick={handleRemove} disabled={isPending}>
-        Remove
-      </button>
+    <div className="flex items-center gap-2">
+      <Button variant="secondary" size="lg" disabled className="w-full sm:w-auto">
+        <CheckIcon className="size-4" />
+        {STATUS_LABELS[optimisticEntry.status] ?? optimisticEntry.status}
+      </Button>
+      <Button variant="outline" size="lg" onClick={handleRemove} disabled={isPending}>
+        <XIcon className="size-4" />
+        {isPending ? 'Removing...' : 'Remove'}
+      </Button>
     </div>
   );
 }
