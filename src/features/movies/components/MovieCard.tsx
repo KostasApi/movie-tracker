@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { StarIcon } from 'lucide-react';
@@ -8,7 +7,7 @@ interface MovieCardProps {
   item: MovieSummary | TvSummary;
 }
 
-export const MovieCard = memo(function MovieCard({ item }: MovieCardProps) {
+export function MovieCard({ item }: MovieCardProps) {
   const title = 'title' in item ? item.title : item.name;
   const date = 'release_date' in item ? item.release_date : item.first_air_date;
   const year = date ? new Date(date).getFullYear() : null;
@@ -48,4 +47,4 @@ export const MovieCard = memo(function MovieCard({ item }: MovieCardProps) {
       </div>
     </Link>
   );
-});
+}
