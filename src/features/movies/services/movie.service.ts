@@ -13,18 +13,19 @@ import {
 export async function getTrending(
   type: 'movie' | 'tv' = 'movie',
   window: 'day' | 'week' = 'week',
+  page = 1,
 ) {
   'use cache';
   cacheLife('hours');
   cacheTag('trending');
   if (type === 'movie') {
     return tmdbFetch(
-      `/trending/movie/${window}`,
+      `/trending/movie/${window}?page=${page}`,
       paginatedResponse(MovieSummarySchema),
     );
   }
   return tmdbFetch(
-    `/trending/tv/${window}`,
+    `/trending/tv/${window}?page=${page}`,
     paginatedResponse(TvSummarySchema),
   );
 }
