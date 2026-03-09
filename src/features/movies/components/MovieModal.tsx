@@ -1,12 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 interface MovieModalProps {
   title: string;
@@ -18,10 +13,8 @@ export function MovieModal({ title, children }: MovieModalProps) {
 
   return (
     <Dialog open onOpenChange={() => router.back()}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
+      <DialogContent className="max-h-[90vh] gap-0 overflow-y-auto px-4 sm:max-w-2xl">
+        <DialogTitle className="sr-only">{title}</DialogTitle>
         {children}
       </DialogContent>
     </Dialog>
