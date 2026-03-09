@@ -12,6 +12,8 @@ A full-stack movie and TV show tracking application built with Next.js 16. Brows
 - **Forms**: React Hook Form + Zod v4
 - **Icons**: Lucide React
 
+> **Learning resource:** See [`NEXTJS_TOPICS.md`](./NEXTJS_TOPICS.md) for a full breakdown of 39 Next.js concepts with direct links to where each one is implemented in the codebase.
+
 ## Features
 
 - **Trending** — Browse trending movies and TV shows with pagination

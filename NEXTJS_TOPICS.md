@@ -7,45 +7,51 @@ Use this alongside the source code to study how each feature works in practice.
 
 ## Table of Contents
 
-1. [App Router & File-Based Routing](#1-app-router--file-based-routing)
-2. [Layouts](#2-layouts)
-3. [Server Components](#3-server-components)
-4. [Client Components](#4-client-components)
-5. [Dynamic Routes](#5-dynamic-routes)
-6. [Parallel Routes](#6-parallel-routes)
-7. [Intercepting Routes](#7-intercepting-routes)
-8. [Loading States (Streaming UI)](#8-loading-states-streaming-ui)
-9. [Error Boundaries](#9-error-boundaries)
-10. [Custom 404 Page](#10-custom-404-page)
-11. [Server Actions](#11-server-actions)
-12. [API Route Handlers](#12-api-route-handlers)
-13. [Data Fetching (Server-Side)](#13-data-fetching-server-side)
-14. [Caching (`use cache`)](#14-caching-use-cache)
-15. [Suspense Boundaries](#15-suspense-boundaries)
-16. [searchParams & URL State](#16-searchparams--url-state)
-17. [generateStaticParams (Static Generation)](#17-generatestaticparams-static-generation)
-18. [generateMetadata (Dynamic SEO)](#18-generatemetadata-dynamic-seo)
-19. [Middleware](#19-middleware)
-20. [Authentication (Auth.js v5)](#20-authentication-authjs-v5)
-21. [Database (Drizzle ORM + Neon)](#21-database-drizzle-orm--neon)
-22. [Image Optimization](#22-image-optimization)
-23. [Font Optimization](#23-font-optimization)
-24. [Revalidation (On-Demand)](#24-revalidation-on-demand)
-25. [React 19 Patterns](#25-react-19-patterns)
-26. [Form Handling (React Hook Form + Zod)](#26-form-handling-react-hook-form--zod)
-27. [Path Aliases](#27-path-aliases)
-28. [React Compiler](#28-react-compiler)
-29. [Environment Variables](#29-environment-variables)
-30. [Catch-All Routes](#30-catch-all-routes)
-31. [Feature-Based Project Structure](#31-feature-based-project-structure)
-32. [Link Component & Client-Side Navigation](#32-link-component--client-side-navigation)
-33. [Partial Prerendering (PPR)](#33-partial-prerendering-ppr)
-34. [Server-Side Redirects (`redirect` & `notFound`)](#34-server-side-redirects-redirect--notfound)
-35. [Server/Client Composition Pattern](#35-serverclient-composition-pattern)
-36. [Route Groups](#36-route-groups)
-37. [Sitemap & Robots](#37-sitemap--robots)
-38. [Dynamic Imports (`next/dynamic`)](#38-dynamic-imports-nextdynamic)
-39. [Instrumentation](#39-instrumentation)
+- [Next.js Topics Covered — Movie Tracker](#nextjs-topics-covered--movie-tracker)
+  - [Table of Contents](#table-of-contents)
+  - [1. App Router \& File-Based Routing](#1-app-router--file-based-routing)
+  - [2. Layouts](#2-layouts)
+  - [3. Server Components](#3-server-components)
+  - [4. Client Components](#4-client-components)
+  - [5. Dynamic Routes](#5-dynamic-routes)
+  - [6. Parallel Routes](#6-parallel-routes)
+  - [7. Intercepting Routes](#7-intercepting-routes)
+  - [8. Loading States (Streaming UI)](#8-loading-states-streaming-ui)
+  - [9. Error Boundaries](#9-error-boundaries)
+  - [10. Custom 404 Page](#10-custom-404-page)
+  - [11. Server Actions](#11-server-actions)
+  - [12. API Route Handlers](#12-api-route-handlers)
+  - [13. Data Fetching (Server-Side)](#13-data-fetching-server-side)
+  - [14. Caching (`use cache`)](#14-caching-use-cache)
+  - [15. Suspense Boundaries](#15-suspense-boundaries)
+  - [16. searchParams \& URL State](#16-searchparams--url-state)
+  - [17. generateStaticParams (Static Generation)](#17-generatestaticparams-static-generation)
+  - [18. generateMetadata (Dynamic SEO)](#18-generatemetadata-dynamic-seo)
+  - [19. Proxy (Middleware)](#19-proxy-middleware)
+  - [20. Authentication (Auth.js v5)](#20-authentication-authjs-v5)
+  - [21. Database (Drizzle ORM + Neon)](#21-database-drizzle-orm--neon)
+  - [22. Image Optimization](#22-image-optimization)
+  - [23. Font Optimization](#23-font-optimization)
+  - [24. Revalidation (On-Demand)](#24-revalidation-on-demand)
+  - [25. React 19 Patterns](#25-react-19-patterns)
+    - [useOptimistic](#useoptimistic)
+    - [useTransition](#usetransition)
+    - [Form actions with `action` prop](#form-actions-with-action-prop)
+  - [26. Form Handling (React Hook Form + Zod)](#26-form-handling-react-hook-form--zod)
+  - [27. Path Aliases](#27-path-aliases)
+  - [28. React Compiler](#28-react-compiler)
+  - [29. Environment Variables](#29-environment-variables)
+  - [30. Catch-All Routes](#30-catch-all-routes)
+  - [31. Feature-Based Project Structure](#31-feature-based-project-structure)
+  - [32. Link Component \& Client-Side Navigation](#32-link-component--client-side-navigation)
+  - [33. Partial Prerendering (PPR)](#33-partial-prerendering-ppr)
+  - [34. Server-Side Redirects (`redirect` \& `notFound`)](#34-server-side-redirects-redirect--notfound)
+  - [35. Server/Client Composition Pattern](#35-serverclient-composition-pattern)
+  - [36. Route Groups](#36-route-groups)
+  - [37. Sitemap \& Robots](#37-sitemap--robots)
+  - [38. Dynamic Imports (`next/dynamic`)](#38-dynamic-imports-nextdynamic)
+  - [39. Instrumentation](#39-instrumentation)
+  - [Summary](#summary)
 
 ---
 
@@ -53,13 +59,13 @@ Use this alongside the source code to study how each feature works in practice.
 
 Every file inside `src/app/` maps to a URL route. Pages are defined by `page.tsx` files.
 
-| Route          | File                               |
-|----------------|------------------------------------|
-| `/`            | `src/app/page.tsx`                 |
-| `/search`      | `src/app/search/page.tsx`          |
-| `/movie/[id]`  | `src/app/movie/[id]/page.tsx`      |
-| `/tv/[id]`     | `src/app/tv/[id]/page.tsx`         |
-| `/watchlist`   | `src/app/watchlist/page.tsx`       |
+| Route         | File                          |
+| ------------- | ----------------------------- |
+| `/`           | `src/app/page.tsx`            |
+| `/search`     | `src/app/search/page.tsx`     |
+| `/movie/[id]` | `src/app/movie/[id]/page.tsx` |
+| `/tv/[id]`    | `src/app/tv/[id]/page.tsx`    |
+| `/watchlist`  | `src/app/watchlist/page.tsx`  |
 
 **Key takeaway:** No router configuration needed — the folder structure **is** the router.
 
@@ -72,16 +78,19 @@ A layout wraps all pages and persists across navigations (does not re-render on 
 **File:** `src/app/layout.tsx`
 
 ```tsx
-export default function RootLayout({ children, modal }: {
+export default function RootLayout({
+  children,
+  modal,
+}: {
   children: React.ReactNode;
-  modal: React.ReactNode;    // ← parallel route slot
+  modal: React.ReactNode; // ← parallel route slot
 }) {
   return (
     <html lang="en">
       <body>
         <Navbar />
         {children}
-        {modal}             {/* ← rendered alongside children */}
+        {modal} {/* ← rendered alongside children */}
       </body>
     </html>
   );
@@ -89,6 +98,7 @@ export default function RootLayout({ children, modal }: {
 ```
 
 **What to study:**
+
 - The layout receives `children` (current page) plus any parallel route slots (here: `modal`)
 - Static metadata is exported at the layout level
 - The `Navbar` persists across all pages without re-mounting
@@ -100,6 +110,7 @@ export default function RootLayout({ children, modal }: {
 By default, every component in the App Router is a **Server Component**. They run on the server only, can be `async`, and can directly access databases, APIs, and secrets.
 
 **Files:**
+
 - `src/app/page.tsx` — async page that fetches trending data
 - `src/app/watchlist/page.tsx` — reads auth session + queries database
 - `src/components/Navbar.tsx` — async component calling `auth()`
@@ -108,12 +119,12 @@ By default, every component in the App Router is a **Server Component**. They ru
 ```tsx
 // src/app/page.tsx (Server Component — no 'use client')
 async function TrendingResults({ type, page }) {
-  const data = await getTrending(type, 'week', page);  // direct server call
+  const data = await getTrending(type, 'week', page); // direct server call
   return <MovieGrid items={data.results} />;
 }
 ```
 
-**Key takeaway:** Server Components can use `await`, access `process.env`, and call databases directly — no API layer needed for data fetching.
+**Key takeaway:** Server Components can use `await`, access `process.env`, and call databases directly — no API layer needed for **server-rendered** data fetching. For client-side mutations and post-render fetching, use **Server Actions** or **Route Handlers** instead.
 
 ---
 
@@ -122,6 +133,7 @@ async function TrendingResults({ type, page }) {
 Components that need interactivity (hooks, event handlers, browser APIs) must start with `'use client'`.
 
 **Files:**
+
 - `src/features/watchlist/components/WatchlistButton.tsx` — uses `useOptimistic`, `useTransition`
 - `src/features/watchlist/components/RatingForm.tsx` — uses `useForm`, `useState`
 - `src/features/search/components/SearchBar.tsx` — uses `useSearch` custom hook
@@ -129,7 +141,7 @@ Components that need interactivity (hooks, event handlers, browser APIs) must st
 - `src/app/error.tsx` — error boundaries must be client components
 
 ```tsx
-'use client';  // ← marks the client boundary
+'use client'; // ← marks the client boundary
 
 import { useOptimistic, useTransition } from 'react';
 
@@ -149,6 +161,7 @@ export function WatchlistButton({ initialEntry }) {
 Brackets `[param]` in folder names create dynamic route segments.
 
 **Files:**
+
 - `src/app/movie/[id]/page.tsx` — movie detail by ID
 - `src/app/tv/[id]/page.tsx` — TV show detail by ID
 
@@ -172,6 +185,7 @@ export default async function MoviePage({ params }: Props) {
 Folders prefixed with `@` define **parallel route slots** — segments rendered simultaneously in the same layout.
 
 **Files:**
+
 - `src/app/@modal/default.tsx` — returns `null` when no modal is active
 - `src/app/@modal/(.)movie/[id]/page.tsx` — movie modal content
 - `src/app/@modal/(.)tv/[id]/page.tsx` — TV modal content
@@ -183,7 +197,7 @@ export default function RootLayout({ children, modal }) {
   return (
     <body>
       {children}
-      {modal}   {/* ← renders the @modal slot */}
+      {modal} {/* ← renders the @modal slot */}
     </body>
   );
 }
@@ -205,11 +219,13 @@ export default function ModalDefault() {
 The `(.)` prefix intercepts a route from the current level, rendering it in a modal overlay instead of a full-page navigation.
 
 **Files:**
+
 - `src/app/@modal/(.)movie/[id]/page.tsx` — intercepts `/movie/[id]`
 - `src/app/@modal/(.)tv/[id]/page.tsx` — intercepts `/tv/[id]`
 - `src/features/movies/components/MovieModal.tsx` — Dialog wrapper
 
 **How it works:**
+
 1. User clicks a movie card link (`/movie/123`) from the home page
 2. Instead of full navigation, the `@modal/(.)movie/[id]` route matches
 3. The movie detail opens in a Dialog overlay as a quick preview
@@ -244,6 +260,7 @@ export function MovieModal({ title, href, children }) {
 A `loading.tsx` file in any route folder automatically shows while the page loads. This leverages React Suspense and streaming under the hood.
 
 **Files:**
+
 - `src/app/loading.tsx` — home page skeleton
 - `src/app/search/loading.tsx` — search skeleton
 - `src/app/movie/[id]/loading.tsx` — movie detail skeleton
@@ -272,16 +289,17 @@ export default function HomeLoading() {
 An `error.tsx` file catches errors in its route segment. Must be a Client Component.
 
 **Files:**
+
 - `src/app/error.tsx` — global error boundary
 - `src/app/movie/[id]/error.tsx` — movie-specific error
 - `src/app/tv/[id]/error.tsx` — TV-specific error
 
 ```tsx
-'use client';  // ← required
+'use client'; // ← required
 
 export default function GlobalError({
   error,
-  reset,    // ← call to retry rendering
+  reset, // ← call to retry rendering
 }: {
   error: Error & { digest?: string };
   reset: () => void;
@@ -316,7 +334,19 @@ export default function NotFound() {
 }
 ```
 
-**Key takeaway:** Place `not-found.tsx` in `app/` for a global 404 page. You can also call `notFound()` from any Server Component to trigger it programmatically.
+```tsx
+// Triggering 404 programmatically in a Server Component
+import { notFound } from 'next/navigation';
+
+export default async function MoviePage({ params }) {
+  const { id } = await params;
+  const movie = await getMovie(id);
+  if (!movie) notFound(); // renders the nearest not-found.tsx
+  return <MovieDetails movie={movie} />;
+}
+```
+
+**Key takeaway:** Place `not-found.tsx` in `app/` for a global 404 page. Import `notFound` from `next/navigation` to trigger it programmatically from any Server Component.
 
 ---
 
@@ -333,17 +363,20 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 
 export async function addToWatchlist(input) {
-  const userId = await requireAuth();       // verify auth
+  const userId = await requireAuth(); // verify auth
   const data = addToWatchlistSchema.parse(input); // validate with Zod
 
   // Prevent duplicates at the data layer
   const existing = await db.query.watchlistEntries.findFirst({
-    where: and(eq(watchlistEntries.userId, userId), eq(watchlistEntries.mediaId, data.mediaId)),
+    where: and(
+      eq(watchlistEntries.userId, userId),
+      eq(watchlistEntries.mediaId, data.mediaId),
+    ),
   });
   if (existing) return;
 
   await db.insert(watchlistEntries).values({ userId, ...data });
-  revalidatePath('/watchlist');              // refresh cached page
+  revalidatePath('/watchlist'); // refresh cached page
 }
 ```
 
@@ -354,16 +387,24 @@ export async function addToWatchlist(input) {
 import { addToWatchlist } from '../actions/watchlist.actions';
 
 // Called directly from event handler
-await addToWatchlist({ mediaId, mediaType, title, posterPath, status: 'want_to_watch' });
+await addToWatchlist({
+  mediaId,
+  mediaType,
+  title,
+  posterPath,
+  status: 'want_to_watch',
+});
 ```
 
 **Inline Server Actions in forms:** `src/components/Navbar.tsx`
 
 ```tsx
-<form action={async () => {
-  'use server';
-  await signOut();
-}}>
+<form
+  action={async () => {
+    'use server';
+    await signOut();
+  }}
+>
   <Button>Sign Out</Button>
 </form>
 ```
@@ -377,6 +418,7 @@ await addToWatchlist({ mediaId, mediaType, title, posterPath, status: 'want_to_w
 `route.ts` files define REST API endpoints using standard `Request`/`Response` objects.
 
 **Files:**
+
 - `src/app/api/movies/trending/route.ts` — `GET /api/movies/trending`
 - `src/app/api/movies/search/route.ts` — `GET /api/movies/search`
 - `src/app/api/auth/[...nextauth]/route.ts` — Auth.js handler
@@ -431,12 +473,15 @@ export async function getMovieDetail(id: string) {
 **TMDB wrapper:** `src/lib/tmdb.ts`
 
 ```tsx
-export async function tmdbFetch<T>(endpoint: string, schema: z.ZodType<T>): Promise<T> {
+export async function tmdbFetch<T>(
+  endpoint: string,
+  schema: z.ZodType<T>,
+): Promise<T> {
   const res = await fetch(`${process.env.TMDB_BASE_URL}${endpoint}`, {
     headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
   });
   if (!res.ok) throw new Error(`TMDB ${res.status}: ${endpoint}`);
-  return schema.parse(await res.json());  // runtime validation with Zod
+  return schema.parse(await res.json()); // runtime validation with Zod
 }
 ```
 
@@ -491,7 +536,7 @@ export async function getMovieDetail(id: string) {
 
 ```tsx
 const nextConfig: NextConfig = {
-  cacheComponents: true,    // ← enable Next.js 16 explicit caching model
+  cacheComponents: true, // ← enable Next.js 16 explicit caching model
 };
 ```
 
@@ -504,6 +549,7 @@ const nextConfig: NextConfig = {
 `<Suspense>` lets you show fallback UI while async children load. This enables streaming — fast initial shell with progressive content.
 
 **Files:**
+
 - `src/app/page.tsx` — wraps `TrendingResults` with Suspense
 - `src/app/search/page.tsx` — wraps `SearchResults` with Suspense
 - `src/app/layout.tsx` — wraps `Navbar` (async server component) with Suspense
@@ -533,6 +579,7 @@ const nextConfig: NextConfig = {
 Pages can read query parameters via the `searchParams` prop (a `Promise` in Next.js 15+).
 
 **Files:**
+
 - `src/app/page.tsx` — reads `?type=movie&page=1`
 - `src/app/search/page.tsx` — reads `?q=batman&page=1`
 - `src/app/watchlist/page.tsx` — reads `?status=watched`
@@ -559,12 +606,15 @@ export function useSearch() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') ?? '';
 
-  const setQuery = useCallback((value: string) => {
-    // 300ms debounce, then push URL
-    timerRef.current = setTimeout(() => {
-      router.push(`/search?q=${encodeURIComponent(value.trim())}`);
-    }, 300);
-  }, [router]);
+  const setQuery = useCallback(
+    (value: string) => {
+      // 300ms debounce, then push URL
+      timerRef.current = setTimeout(() => {
+        router.push(`/search?q=${encodeURIComponent(value.trim())}`);
+      }, 300);
+    },
+    [router],
+  );
 
   return { query, setQuery };
 }
@@ -623,40 +673,42 @@ export const metadata: Metadata = {
 
 ---
 
-## 19. Middleware
+## 19. Proxy (Middleware)
 
-Runs before every matched request. Used here for auth protection.
+Runs before every matched request. Used here for auth protection. In Next.js 16, `middleware.ts` was renamed to `proxy.ts` and the exported function must be a named `proxy` export (not `default`). The file must be at the same level as `app/` — so inside `src/` if you use that directory structure.
 
-**File:** `proxy.ts` (project root, could also be `middleware.ts`)
+**File:** `src/proxy.ts`
 
 ```tsx
 import { auth } from '@/lib/auth';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
+export async function proxy(req: NextRequest) {
+  const session = await auth();
+  const isLoggedIn = !!session;
   const isProtected = req.nextUrl.pathname.startsWith('/watchlist');
 
   if (isProtected && !isLoggedIn) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
-});
+}
 
 export const config = {
-  matcher: ['/watchlist/:path*'],   // ← only runs on these routes
+  matcher: ['/watchlist/:path*'], // ← only runs on these routes
 };
 ```
 
-**Key takeaway:** The `matcher` config restricts which routes trigger the middleware (avoids running on static assets). Here, Auth.js provides a wrapper around middleware that injects `req.auth`.
+**Key takeaway:** In Next.js 16, `middleware.ts` is renamed to `proxy.ts` with a named `proxy` export. The `matcher` config restricts which routes trigger the proxy (avoids running on static assets). The proxy runs on the `nodejs` runtime only (not `edge`).
 
 ---
 
 ## 20. Authentication (Auth.js v5)
 
 **Files:**
+
 - `src/lib/auth.ts` — NextAuth configuration
 - `src/app/api/auth/[...nextauth]/route.ts` — auth API routes
-- `proxy.ts` — middleware-based route protection
+- `src/proxy.ts` — proxy-based route protection
 
 ```tsx
 // src/lib/auth.ts
@@ -668,7 +720,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: { signIn: '/login' },
   callbacks: {
     session({ session, token }) {
-      if (token.sub) session.user.id = token.sub;  // expose user ID
+      if (token.sub) session.user.id = token.sub; // expose user ID
       return session;
     },
   },
@@ -687,7 +739,9 @@ export const { GET, POST } = handlers;
 ```tsx
 // src/components/Navbar.tsx
 const session = await auth();
-if (session?.user) { /* show watchlist link */ }
+if (session?.user) {
+  /* show watchlist link */
+}
 ```
 
 **Protected page pattern:**
@@ -698,13 +752,14 @@ const session = await auth();
 if (!session?.user?.id) redirect('/login');
 ```
 
-**Key takeaway:** Auth.js v5 exports `auth()` for server-side session access, `signIn()`/`signOut()` for auth actions, and `handlers` for API routes. Use `auth()` both in Server Components and middleware.
+**Key takeaway:** Auth.js v5 exports `auth()` for server-side session access, `signIn()`/`signOut()` for auth actions, and `handlers` for API routes. Use `auth()` both in Server Components and the proxy.
 
 ---
 
 ## 21. Database (Drizzle ORM + Neon)
 
 **Files:**
+
 - `src/db/schema.ts` — table definitions with PostgreSQL enums
 - `src/db/index.ts` — Drizzle client initialization
 - `src/features/watchlist/queries/watchlist.queries.ts` — read queries
@@ -714,7 +769,9 @@ if (!session?.user?.id) redirect('/login');
 ```tsx
 // src/db/schema.ts — schema definition
 export const watchlistStatusEnum = pgEnum('watchlist_status', [
-  'want_to_watch', 'watching', 'watched',
+  'want_to_watch',
+  'watching',
+  'watched',
 ]);
 
 export const watchlistEntries = pgTable('watchlist_entries', {
@@ -765,7 +822,7 @@ images: {
 <Image
   src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
   alt={title}
-  fill                  // ← fills parent container
+  fill // ← fills parent container
   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
   className="object-cover transition-transform group-hover:scale-105"
 />
@@ -804,7 +861,7 @@ After mutations, `revalidatePath()` invalidates the cache for a specific route s
 ```tsx
 export async function addToWatchlist(input) {
   // ... check for duplicates, insert into database
-  revalidatePath('/watchlist');   // ← purge cached watchlist page
+  revalidatePath('/watchlist'); // ← purge cached watchlist page
 }
 
 export async function removeFromWatchlist(entryId: string) {
@@ -850,17 +907,19 @@ const [isPending, startTransition] = useTransition();
 // Use isPending to show loading indicators
 <Button disabled={isPending}>
   {isPending ? 'Adding...' : 'Add to Watchlist'}
-</Button>
+</Button>;
 ```
 
 ### Form actions with `action` prop
 
 ```tsx
 // src/components/Navbar.tsx — form with Server Action
-<form action={async () => {
-  'use server';
-  await signIn('github');
-}}>
+<form
+  action={async () => {
+    'use server';
+    await signIn('github');
+  }}
+>
   <Button>Sign In</Button>
 </form>
 ```
@@ -888,7 +947,7 @@ const { control, handleSubmit, reset } = useForm<RatingFormValues>({
 
 const onSubmit = (values: RatingFormValues) => {
   startTransition(async () => {
-    await updateWatchlistEntry(entryId, values);  // Server Action
+    await updateWatchlistEntry(entryId, values); // Server Action
   });
 };
 ```
@@ -925,11 +984,9 @@ Automatically memoizes components and hooks — no manual `useMemo`/`useCallback
 
 ```tsx
 const nextConfig: NextConfig = {
-  reactCompiler: true,   // ← stable in Next.js 16
+  reactCompiler: true, // ← stable in Next.js 16
 };
 ```
-
-**Note:** `MovieCard.tsx` still uses `memo()` explicitly — this works alongside the compiler but is largely redundant when the compiler is enabled.
 
 ---
 
@@ -937,14 +994,15 @@ const nextConfig: NextConfig = {
 
 **File:** `.env` (not committed)
 
-| Variable             | Used In                        | Purpose                        |
-|----------------------|--------------------------------|--------------------------------|
-| `TMDB_API_KEY`       | `src/lib/tmdb.ts`              | TMDB API bearer token          |
-| `TMDB_BASE_URL`      | `src/lib/tmdb.ts`              | TMDB API base URL              |
-| `AUTH_SECRET`         | Auth.js (automatic)            | Session encryption key         |
-| `AUTH_GITHUB_ID`      | Auth.js (automatic)            | GitHub OAuth client ID         |
-| `AUTH_GITHUB_SECRET`  | Auth.js (automatic)            | GitHub OAuth client secret     |
-| `POSTGRES_URL`        | `src/db/index.ts`              | Neon PostgreSQL connection     |
+| Variable             | Used In             | Purpose                    |
+| -------------------- | ------------------- | -------------------------- |
+| `TMDB_API_KEY`       | `src/lib/tmdb.ts`   | TMDB API bearer token      |
+| `TMDB_BASE_URL`      | `src/lib/tmdb.ts`   | TMDB API base URL          |
+| `AUTH_SECRET`        | Auth.js (automatic) | Session encryption key     |
+| `AUTH_GITHUB_ID`     | Auth.js (automatic) | GitHub OAuth client ID     |
+| `AUTH_GITHUB_SECRET` | Auth.js (automatic) | GitHub OAuth client secret |
+| `POSTGRES_URL`       | `src/db/index.ts`   | Neon PostgreSQL connection |
+| `NEXT_PUBLIC_BASE_URL` | `sitemap.ts`, `robots.ts` | Public site URL for SEO |
 
 **Key takeaway:** Server-side env vars (no `NEXT_PUBLIC_` prefix) are only available in Server Components, Server Actions, and Route Handlers — never exposed to the browser.
 
@@ -1002,6 +1060,7 @@ src/
 The `Link` component from `next/link` enables client-side navigation — clicking a link swaps the page content without a full browser reload. Next.js automatically **prefetches** linked routes in the viewport.
 
 **Files:**
+
 - `src/features/movies/components/MovieCard.tsx` — card links to movie/TV detail
 - `src/app/page.tsx` — tab links and pagination links
 - `src/app/search/page.tsx` — pagination links
@@ -1017,7 +1076,7 @@ const href = `/${item.media_type}/${item.id}`;
 
 <Link href={href} className="group flex flex-col gap-2">
   {/* card content */}
-</Link>
+</Link>;
 ```
 
 **Link with `asChild` pattern (via shadcn Button):**
@@ -1104,7 +1163,7 @@ The movie detail page (`src/app/movie/[id]/page.tsx`) shows nested PPR:
 
 ```tsx
 const nextConfig: NextConfig = {
-  cacheComponents: true,    // ← enables the explicit caching model PPR relies on
+  cacheComponents: true, // ← enables the explicit caching model PPR relies on
 };
 ```
 
@@ -1124,7 +1183,7 @@ import { redirect } from 'next/navigation';
 
 export default async function WatchlistPage() {
   const session = await auth();
-  if (!session?.user?.id) redirect('/login');  // ← stops rendering, sends 307
+  if (!session?.user?.id) redirect('/login'); // ← stops rendering, sends 307
   // ... rest of page only runs if authenticated
 }
 ```
@@ -1133,7 +1192,7 @@ export default async function WatchlistPage() {
 // src/features/watchlist/actions/watchlist.actions.ts
 async function requireAuth() {
   const session = await auth();
-  if (!session?.user?.id) redirect('/login');  // ← redirect from Server Action
+  if (!session?.user?.id) redirect('/login'); // ← redirect from Server Action
   return session.user.id;
 }
 ```
@@ -1145,10 +1204,11 @@ async function requireAuth() {
 import { notFound } from 'next/navigation';
 
 const movie = await getMovieDetail(id);
-if (!movie) notFound();  // ← renders src/app/not-found.tsx
+if (!movie) notFound(); // ← renders src/app/not-found.tsx
 ```
 
 **Files:**
+
 - `src/app/watchlist/page.tsx` — `redirect('/login')` when not authenticated
 - `src/features/watchlist/actions/watchlist.actions.ts` — `redirect('/login')` in `requireAuth()`
 - `src/app/not-found.tsx` — the page rendered when `notFound()` is called
@@ -1209,7 +1269,7 @@ export async function Navbar() {
   return (
     <header>
       <Suspense>
-        <SearchBar />          {/* ← Client Component, no server data needed */}
+        <SearchBar /> {/* ← Client Component, no server data needed */}
       </Suspense>
       {session?.user && <Link href="/watchlist">Watchlist</Link>}
     </header>
@@ -1245,15 +1305,17 @@ import { auth, signIn } from '@/lib/auth';
 
 export default async function LoginPage() {
   const session = await auth();
-  if (session?.user) redirect('/');    // ← already logged in, go home
+  if (session?.user) redirect('/'); // ← already logged in, go home
 
   return (
     <main>
       <h1>Sign in to Movie Tracker</h1>
-      <form action={async () => {
-        'use server';
-        await signIn('github', { redirectTo: '/' });
-      }}>
+      <form
+        action={async () => {
+          'use server';
+          await signIn('github', { redirectTo: '/' });
+        }}
+      >
         <Button>Continue with GitHub</Button>
       </form>
     </main>
@@ -1274,6 +1336,7 @@ src/app/
 ```
 
 **Common use cases:**
+
 - `(auth)` — sign in, sign up, forgot password (could share a minimal layout without Navbar)
 - `(dashboard)` — authenticated pages with sidebar navigation
 - `(marketing)` — landing pages with a different layout
@@ -1331,7 +1394,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/watchlist'],   // ← hide private/API routes
+      disallow: ['/api/', '/watchlist'], // ← hide private/API routes
     },
     sitemap: `${process.env.NEXT_PUBLIC_BASE_URL}/sitemap.xml`,
   };
@@ -1368,6 +1431,7 @@ const RatingForm = dynamic(() =>
 ```
 
 **Why `RatingForm` is a good candidate for lazy loading:**
+
 - It pulls in React Hook Form, Zod resolver, Dialog, Select, Textarea, and StarRating
 - Most users browse without editing — no need to load this upfront
 - The form only renders when the user clicks "Edit" (inside a Dialog)
@@ -1421,6 +1485,7 @@ export async function onRequestError(
 ```
 
 **Two exported functions:**
+
 - **`register()`** — runs once when the server starts. Use `NEXT_RUNTIME` to branch between Node.js and Edge runtime initialization.
 - **`onRequestError()`** — called on every unhandled request error. Provides structured error context (route path, type, digest) for error reporting services.
 
@@ -1430,44 +1495,44 @@ export async function onRequestError(
 
 ## Summary
 
-| # | Topic | Complexity | Key File(s) |
-|---|-------|------------|-------------|
-| 1 | App Router | Foundational | `src/app/*/page.tsx` |
-| 2 | Layouts | Foundational | `src/app/layout.tsx` |
-| 3 | Server Components | Foundational | `src/app/page.tsx`, `Navbar.tsx` |
-| 4 | Client Components | Foundational | `WatchlistButton.tsx`, `SearchBar.tsx` |
-| 5 | Dynamic Routes | Foundational | `src/app/movie/[id]/page.tsx` |
-| 6 | Parallel Routes | Advanced | `src/app/@modal/` |
-| 7 | Intercepting Routes | Advanced | `src/app/@modal/(.)movie/[id]/` |
-| 8 | Loading States | Intermediate | `src/app/*/loading.tsx` |
-| 9 | Error Boundaries | Intermediate | `src/app/*/error.tsx` |
-| 10 | Custom 404 | Foundational | `src/app/not-found.tsx` |
-| 11 | Server Actions | Intermediate | `watchlist.actions.ts` |
-| 12 | API Route Handlers | Intermediate | `src/app/api/movies/*/route.ts` |
-| 13 | Data Fetching | Intermediate | `movie.service.ts`, `tmdb.ts` |
-| 14 | Caching (`use cache`) | Advanced | `movie.service.ts` |
-| 15 | Suspense Boundaries | Intermediate | `src/app/page.tsx` |
-| 16 | searchParams | Intermediate | `src/app/page.tsx`, `useSearch.ts` |
-| 17 | generateStaticParams | Advanced | `src/app/movie/[id]/page.tsx` |
-| 18 | generateMetadata | Intermediate | `src/app/movie/[id]/page.tsx` |
-| 19 | Middleware | Intermediate | `proxy.ts` |
-| 20 | Authentication | Intermediate | `src/lib/auth.ts` |
-| 21 | Database (Drizzle) | Intermediate | `src/db/schema.ts`, `src/db/index.ts` |
-| 22 | Image Optimization | Foundational | `MovieCard.tsx`, `next.config.ts` |
-| 23 | Font Optimization | Foundational | `src/app/layout.tsx` |
-| 24 | Revalidation | Intermediate | `watchlist.actions.ts` |
-| 25 | React 19 Patterns | Advanced | `WatchlistButton.tsx` |
-| 26 | Form Handling | Intermediate | `RatingForm.tsx` |
-| 27 | Path Aliases | Foundational | `tsconfig.json` |
-| 28 | React Compiler | Advanced | `next.config.ts` |
-| 29 | Environment Variables | Foundational | `.env`, `tmdb.ts` |
-| 30 | Catch-All Routes | Foundational | `api/auth/[...nextauth]/route.ts` |
-| 31 | Project Structure | Architectural | `src/features/` |
-| 32 | Link & Navigation | Foundational | `MovieCard.tsx`, `Navbar.tsx` |
-| 33 | Partial Prerendering | Advanced | `src/app/page.tsx`, `next.config.ts` |
-| 34 | redirect & notFound | Intermediate | `watchlist/page.tsx`, `watchlist.actions.ts` |
-| 35 | Server/Client Composition | Architectural | `movie/[id]/page.tsx`, `WatchlistButton.tsx` |
-| 36 | Route Groups | Intermediate | `src/app/(auth)/login/page.tsx` |
-| 37 | Sitemap & Robots | Intermediate | `src/app/sitemap.ts`, `src/app/robots.ts` |
-| 38 | Dynamic Imports | Intermediate | `WatchlistGrid.tsx` |
-| 39 | Instrumentation | Advanced | `instrumentation.ts` |
+| #   | Topic                     | Complexity    | Key File(s)                                  |
+| --- | ------------------------- | ------------- | -------------------------------------------- |
+| 1   | App Router                | Foundational  | `src/app/*/page.tsx`                         |
+| 2   | Layouts                   | Foundational  | `src/app/layout.tsx`                         |
+| 3   | Server Components         | Foundational  | `src/app/page.tsx`, `Navbar.tsx`             |
+| 4   | Client Components         | Foundational  | `WatchlistButton.tsx`, `SearchBar.tsx`       |
+| 5   | Dynamic Routes            | Foundational  | `src/app/movie/[id]/page.tsx`                |
+| 6   | Parallel Routes           | Advanced      | `src/app/@modal/`                            |
+| 7   | Intercepting Routes       | Advanced      | `src/app/@modal/(.)movie/[id]/`              |
+| 8   | Loading States            | Intermediate  | `src/app/*/loading.tsx`                      |
+| 9   | Error Boundaries          | Intermediate  | `src/app/*/error.tsx`                        |
+| 10  | Custom 404                | Foundational  | `src/app/not-found.tsx`                      |
+| 11  | Server Actions            | Intermediate  | `watchlist.actions.ts`                       |
+| 12  | API Route Handlers        | Intermediate  | `src/app/api/movies/*/route.ts`              |
+| 13  | Data Fetching             | Intermediate  | `movie.service.ts`, `tmdb.ts`                |
+| 14  | Caching (`use cache`)     | Advanced      | `movie.service.ts`                           |
+| 15  | Suspense Boundaries       | Intermediate  | `src/app/page.tsx`                           |
+| 16  | searchParams              | Intermediate  | `src/app/page.tsx`, `useSearch.ts`           |
+| 17  | generateStaticParams      | Advanced      | `src/app/movie/[id]/page.tsx`                |
+| 18  | generateMetadata          | Intermediate  | `src/app/movie/[id]/page.tsx`                |
+| 19  | Proxy (Middleware)        | Intermediate  | `src/proxy.ts`                               |
+| 20  | Authentication            | Intermediate  | `src/lib/auth.ts`                            |
+| 21  | Database (Drizzle)        | Intermediate  | `src/db/schema.ts`, `src/db/index.ts`        |
+| 22  | Image Optimization        | Foundational  | `MovieCard.tsx`, `next.config.ts`            |
+| 23  | Font Optimization         | Foundational  | `src/app/layout.tsx`                         |
+| 24  | Revalidation              | Intermediate  | `watchlist.actions.ts`                       |
+| 25  | React 19 Patterns         | Advanced      | `WatchlistButton.tsx`                        |
+| 26  | Form Handling             | Intermediate  | `RatingForm.tsx`                             |
+| 27  | Path Aliases              | Foundational  | `tsconfig.json`                              |
+| 28  | React Compiler            | Advanced      | `next.config.ts`                             |
+| 29  | Environment Variables     | Foundational  | `.env`, `tmdb.ts`                            |
+| 30  | Catch-All Routes          | Foundational  | `api/auth/[...nextauth]/route.ts`            |
+| 31  | Project Structure         | Architectural | `src/features/`                              |
+| 32  | Link & Navigation         | Foundational  | `MovieCard.tsx`, `Navbar.tsx`                |
+| 33  | Partial Prerendering      | Advanced      | `src/app/page.tsx`, `next.config.ts`         |
+| 34  | redirect & notFound       | Intermediate  | `watchlist/page.tsx`, `watchlist.actions.ts` |
+| 35  | Server/Client Composition | Architectural | `movie/[id]/page.tsx`, `WatchlistButton.tsx` |
+| 36  | Route Groups              | Intermediate  | `src/app/(auth)/login/page.tsx`              |
+| 37  | Sitemap & Robots          | Intermediate  | `src/app/sitemap.ts`, `src/app/robots.ts`    |
+| 38  | Dynamic Imports           | Intermediate  | `WatchlistGrid.tsx`                          |
+| 39  | Instrumentation           | Advanced      | `instrumentation.ts`                         |
