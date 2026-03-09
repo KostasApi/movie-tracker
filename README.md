@@ -62,7 +62,7 @@ See `.env.example` for all required variables:
 | `AUTH_SECRET`        | Auth.js secret — generate with `npx auth secret` |
 | `AUTH_GITHUB_ID`     | GitHub OAuth App Client ID                       |
 | `AUTH_GITHUB_SECRET` | GitHub OAuth App Client Secret                   |
-| `POSTGRES_DATABASE`  | Neon PostgreSQL connection string                |
+| `POSTGRES_URL`       | Neon PostgreSQL connection string                |
 
 ## Project Structure
 
