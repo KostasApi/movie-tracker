@@ -4,19 +4,19 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import { getWatchlistByUser } from '@/features/watchlist/queries/watchlist.queries';
 import { WatchlistGrid } from '@/features/watchlist/components/WatchlistGrid';
+import { WATCHLIST_STATUS_LABELS } from '@/features/watchlist/constants/watchlist.constants';
+import type { WatchlistStatus } from '@/features/watchlist/types/watchlist.types';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'My Watchlist — Movie Tracker',
 };
 
-type Status = 'want_to_watch' | 'watching' | 'watched';
-
-const FILTERS: { value: Status | 'all'; label: string }[] = [
+const FILTERS: { value: WatchlistStatus | 'all'; label: string }[] = [
   { value: 'all', label: 'All' },
-  { value: 'want_to_watch', label: 'Want to Watch' },
-  { value: 'watching', label: 'Watching' },
-  { value: 'watched', label: 'Watched' },
+  ...(Object.entries(WATCHLIST_STATUS_LABELS) as [WatchlistStatus, string][]).map(
+    ([value, label]) => ({ value, label }),
+  ),
 ];
 
 export default async function WatchlistPage({
@@ -30,7 +30,7 @@ export default async function WatchlistPage({
   const params = await searchParams;
   const entries = await getWatchlistByUser(session.user.id);
 
-  const status = params.status as Status | undefined;
+  const status = params.status as WatchlistStatus | undefined;
   const filtered = status
     ? entries.filter((e) => e.status === status)
     : entries;
@@ -52,6 +52,7 @@ export default async function WatchlistPage({
                       ? '/watchlist'
                       : `/watchlist?status=${filter.value}`
                   }
+                  aria-current={isActive ? 'page' : undefined}
                   className={cn(
                     'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
                     isActive

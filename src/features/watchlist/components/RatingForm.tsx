@@ -5,6 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { updateWatchlistEntry } from '../actions/watchlist.actions';
+import { WATCHLIST_STATUS_LABELS } from '../constants/watchlist.constants';
 import { StarRating } from '@/components/StarRating';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -30,12 +31,6 @@ const ratingFormSchema = z.object({
   note: z.string().max(500).nullable(),
 });
 type RatingFormValues = z.infer<typeof ratingFormSchema>;
-
-const STATUS_LABELS: Record<RatingFormValues['status'], string> = {
-  want_to_watch: 'Want to Watch',
-  watching: 'Watching',
-  watched: 'Watched',
-};
 
 interface RatingFormProps {
   entryId: string;
@@ -92,7 +87,7 @@ export function RatingForm({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(STATUS_LABELS).map(([value, label]) => (
+                    {Object.entries(WATCHLIST_STATUS_LABELS).map(([value, label]) => (
                       <SelectItem key={value} value={value}>
                         {label}
                       </SelectItem>

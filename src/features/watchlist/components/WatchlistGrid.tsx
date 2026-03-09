@@ -6,15 +6,10 @@ import { useOptimistic, useTransition } from 'react';
 import { XIcon, StarIcon } from 'lucide-react';
 import { removeFromWatchlist } from '../actions/watchlist.actions';
 import { RatingForm } from './RatingForm';
+import { WATCHLIST_STATUS_LABELS } from '../constants/watchlist.constants';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { WatchlistEntry } from '@/db/schema';
-
-const STATUS_LABELS: Record<string, string> = {
-  want_to_watch: 'Want to Watch',
-  watching: 'Watching',
-  watched: 'Watched',
-};
 
 export function WatchlistGrid({ entries }: { entries: WatchlistEntry[] }) {
   const [isPending, startTransition] = useTransition();
@@ -64,7 +59,7 @@ export function WatchlistGrid({ entries }: { entries: WatchlistEntry[] }) {
             </Link>
 
             <Badge variant="outline" className="w-fit text-xs">
-              {STATUS_LABELS[entry.status] ?? entry.status}
+              {WATCHLIST_STATUS_LABELS[entry.status] ?? entry.status}
             </Badge>
 
             {entry.rating && (
